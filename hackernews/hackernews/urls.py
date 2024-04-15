@@ -17,8 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from hackerposts.views import PostAPIView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/v1/posts', PostAPIView.as_view()),
 ]
 
 admin.site.site_header = 'Panel administration'
