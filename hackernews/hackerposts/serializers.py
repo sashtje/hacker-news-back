@@ -16,7 +16,18 @@ class PostSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'rating', 'created_at', 'url', 'author_nickname')
 
 
-class CommentSerializer(serializers.ModelSerializer):
+class CommentRootSerializer(serializers.ModelSerializer):
+    author_nickname = serializers.CharField(source='author.nickname')
+    comments_count = serializers.IntegerField()
+
     class Meta:
         model = Comment
-        fields = '__all__'
+        fields = ('id', 'created_at', 'text', 'author_nickname', 'comments_count')
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    author_nickname = serializers.CharField(source='author.nickname')
+
+    class Meta:
+        model = Comment
+        fields = ('id', 'created_at', 'text', 'parentcomment_id', 'rootcomment_id', 'author_nickname')
