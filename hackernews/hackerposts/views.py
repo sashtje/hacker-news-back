@@ -6,9 +6,18 @@ from .serializers import PostSerializer, CommentRootSerializer, CommentSerialize
 from .models import Post, Comment
 
 
-class PostAPIView(generics.ListAPIView):
+class PostsListAPIView(generics.ListAPIView):
     queryset = Post.objects.all()[:100].select_related('author')
     serializer_class = PostSerializer
+
+
+class PostAPIView(generics.ListAPIView):
+    serializer_class = PostSerializer
+
+    def get_queryset(self):
+        post_id = self.kwargs['post_id']
+        queryset = Post.objects.filter(id=post_id).select_related('author')
+        return queryset
 
 
 class CommentRootAPIView(generics.ListAPIView):

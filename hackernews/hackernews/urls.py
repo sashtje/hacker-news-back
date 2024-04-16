@@ -17,11 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from hackerposts.views import PostAPIView, CommentRootAPIView, CommentAPIView
+from hackerposts.views import PostsListAPIView, PostAPIView, CommentRootAPIView, CommentAPIView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/posts', PostAPIView.as_view()),
+    path('api/v1/posts/', PostsListAPIView.as_view()),
+    path('api/v1/posts/<int:post_id>/', PostAPIView.as_view()),
     path('api/v1/posts/<int:post_id>/comments/', CommentRootAPIView.as_view()),
     path('api/v1/posts/<int:post_id>/comments/<int:root_id>/', CommentAPIView.as_view()),
 ]
